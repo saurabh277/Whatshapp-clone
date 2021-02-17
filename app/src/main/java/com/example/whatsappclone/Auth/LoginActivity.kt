@@ -1,9 +1,9 @@
-package com.example.whatsappclone
+package com.example.whatsappclone.Auth
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
+import com.example.whatsappclone.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_login.*
 import androidx.core.widget.addTextChangedListener as addTextChangedListener1
@@ -50,7 +50,8 @@ class LoginActivity : AppCompatActivity() {
          }
 
     private fun showOptActivity() {
-        startActivity(Intent(this,OtpActivity::class.java).putExtra(PHONE_NUMBER,phoneNumber))
+        startActivity(Intent(this,
+            OtpActivity::class.java).putExtra(PHONE_NUMBER,phoneNumber))
         finish() //so activity remove from back stack
         }
 }

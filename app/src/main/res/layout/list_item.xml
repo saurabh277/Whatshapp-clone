@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/userImgView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:adjustViewBounds="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/defaultavatar"
+        app:shapeAppearanceOverlay="@style/RoundedImageViewSmall" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+         <TextView
+             android:id="@+id/titleTv"
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:textColor="@android:color/black"
+             android:textStyle="bold"
+             android:lines="1"
+             android:text="Saurabh Bisht"
+             android:layout_marginEnd="12dp"
+             android:textSize="18sp"
+             android:layout_height="wrap_content"
+             android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/timeTv"
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:lines="1"
+                android:text="6/1/21"
+                android:textColor="@android:color/black"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/subtitleTv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:lines="1"
+                android:text="Hey:there ,I am using whatsapp!"
+                android:layout_marginEnd="12dp"
+                android:textSize="14sp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/countTv"
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:paddingTop="2dp"
+                android:ellipsize="end"
+                android:paddingBottom="2dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="6"
+                android:background="@drawable/count_background"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

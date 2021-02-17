@@ -6,7 +6,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity">
+    tools:context=".Auth.SignUpActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:src="@drawable/defaultavatar"
-        app:shapeAppearanceOverlay="@style/RoundedImageView"/>
+        app:shapeAppearanceOverlay="@style/RoundedImageView" />
 
     <EditText
         android:id="@+id/nameEt"

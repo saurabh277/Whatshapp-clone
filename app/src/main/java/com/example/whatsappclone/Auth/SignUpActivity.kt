@@ -1,4 +1,4 @@
-package com.example.whatsappclone
+package com.example.whatsappclone.Auth
 
 import android.app.Activity
 import android.content.Intent
@@ -6,7 +6,10 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import com.example.whatsappclone.MainActivity
+import com.example.whatsappclone.R
+import com.example.whatsappclone.model.User
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -14,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_sign_up.*
-import java.util.jar.Manifest
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -25,6 +27,10 @@ class SignUpActivity : AppCompatActivity() {
         FirebaseAuth.getInstance()
     }
 
+    val database by lazy {
+        FirebaseFirestore.getInstance()
+    }
+
     lateinit var downloadUrl:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +39,33 @@ class SignUpActivity : AppCompatActivity() {
         userImgView.setOnClickListener {
          checkPermissionForImage()
             //firebase extension - Image Thumbnail
+        }
+
+        nextBtn.setOnClickListener {
+            //disable next button
+            nextBtn.isEnabled=false
+            //first check whether name or image is empty or not
+            val name=nameEt.text.toString()
+            if(name.isEmpty()){
+                Toast.makeText(this,"Name cannot be empty",Toast.LENGTH_SHORT).show()
+            }
+            else if(!::downloadUrl.isInitialized){
+                Toast.makeText(this,"Image cannot be empty",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                //upload user in database
+                val user=
+                    User(name, downloadUrl, downloadUrl, auth.uid!!)
+                database.collection("users").document(auth.uid!!).set(user).addOnSuccessListener {
+                  startActivity(
+                      Intent(this, MainActivity::class.java)
+                  )
+                    finish()
+                }.addOnFailureListener {
+                 nextBtn.isEnabled=true
+                }
+            }
+
         }
     }
 
@@ -71,7 +104,7 @@ class SignUpActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == 1000) {
             data?.data?.let {
                 userImgView.setImageURI(it)
-                startUpload(it)
+                startUpload(it) //for uploading image in firebase storage
             }
         }
     }

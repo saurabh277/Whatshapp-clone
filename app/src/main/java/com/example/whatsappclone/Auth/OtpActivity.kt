@@ -1,6 +1,5 @@
-package com.example.whatsappclone
+package com.example.whatsappclone.Auth
 
-import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -15,6 +14,7 @@ import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
+import com.example.whatsappclone.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
@@ -214,7 +214,7 @@ class OtpActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showLoginActivity() {
-        startActivity(Intent(this,LoginActivity::class.java)
+        startActivity(Intent(this, LoginActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)) //so there will be no back stack
 
     }

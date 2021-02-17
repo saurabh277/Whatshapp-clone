@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.App" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/purple500</item>
         <item name="colorPrimaryDark">@color/purple700</item>
@@ -10,7 +10,22 @@
 
     <style name="RoundedImageView">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">60%</item>
+        <item name="cornerSize">60dp</item>
+    </style>
+
+
+    <style name="SplashTheme" parent="Theme.App">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@color/purple200</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="RoundedImageViewSmall">RoundedImageVerySmall>
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 
 </resources>
