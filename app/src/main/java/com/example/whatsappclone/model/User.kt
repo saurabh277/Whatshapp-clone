@@ -20,7 +20,7 @@ data class User(
         thumbImage,
         uid,
         "",
-        "Hey there ,I am using whatsapp!",
+        "Hey there,I am using whatsapp!",
         "" //we can use anything (FieldValue.serverTimestamp())that is current time when you are creating account -this is calculated using firebasse end or we can also use system.currtimeinmillisec()
     )
 }
