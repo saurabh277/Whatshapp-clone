@@ -116,7 +116,8 @@ class PeopleFragment : Fragment() {
             override fun getItemViewType(position: Int): Int {
                 val item=getItem(position)?.toObject(User::class.java)
                 return if(auth.uid == item!!.uid){
-                    DELETED_VIEW_TYPE
+                    DELETED_VIEW_TYPE  //so that our own view not come in people
+
                 }
                 else{
                     NORMAL_VIEW_TYPE

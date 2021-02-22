@@ -4,7 +4,7 @@ import java.util.*
 
 data class Inbox(
  val msg:String,
- val from:String,
+ var from:String,
  var name:String,
  var image:String,
  val time:Date = Date(),
