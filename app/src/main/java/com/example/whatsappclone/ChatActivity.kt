@@ -3,15 +3,13 @@ package com.example.whatsappclone
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.whatsappclone.model.Inbox
-import com.example.whatsappclone.model.Message
-import com.example.whatsappclone.model.User
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.whatsappclone.adapter.ChatAdapter
+import com.example.whatsappclone.model.*
+import com.example.whatsappclone.utils.isSameDayAs
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import com.vanniktech.emoji.EmojiManager
@@ -40,6 +38,10 @@ class ChatActivity : AppCompatActivity() {
         FirebaseDatabase.getInstance()
     }
     lateinit var currentUser: User
+
+    private val messages = mutableListOf<ChatEvent>()
+
+    lateinit var chatAdapter:ChatAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         EmojiManager.install(GoogleEmojiProvider())
@@ -49,9 +51,15 @@ class ChatActivity : AppCompatActivity() {
             .addOnSuccessListener {
              currentUser=it.toObject(User::class.java)!!
             }
+        chatAdapter = ChatAdapter(messages,mCurrentUid)
+        msgRv.apply {
+            layoutManager=LinearLayoutManager(this@ChatActivity)
+            adapter=chatAdapter
+        }
 
         nameTv.text =name
         Picasso.get().load(image).into(userImgView)
+        listenToMessage()
         sendBtn.setOnClickListener {
             msgEdtv.text?.let {
                 if(it.isNotEmpty()){ //if edit text is not empty
@@ -60,6 +68,58 @@ class ChatActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun listenToMessage() {
+        getMessages((friendId))
+            .orderByKey() //because we want msg in some order
+
+            //to listen all changes occuring in  children of this message
+            .addChildEventListener(object : ChildEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                   //curent msg added
+                    val msg=snapshot.getValue(Message::class.java)
+                    //now we need to update this msg
+                    addMessage(msg)
+                         }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+            })
+    }
+
+    private fun addMessage(msg: Message?) {
+     val eventBefore =messages.lastOrNull() //it will give us last value or null if no vakue is there
+        if (msg != null) {
+            if(eventBefore !=null && !eventBefore.sentAt.isSameDayAs(msg.sentAt) || eventBefore ==null){
+                //we just add items in list if current msg date is same as last sent msg
+                //else add dateheader
+                messages.add(
+                    DateHeader(
+                        msg.sentAt,context=this
+                    )
+                )
+            }
+        }
+        if (msg != null) {
+            messages.add(msg)
+        }
+        chatAdapter.notifyItemInserted(messages.size -1)
+        msgRv.scrollToPosition(messages.size -1)
     }
 
     private fun sendMessage(msg: String) {
